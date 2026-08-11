@@ -1,0 +1,66 @@
+# Copyright (C) 2018  Intel Corporation. All rights reserved.
+# Your use of Intel Corporation's design tools, logic functions 
+# and other software and tools, and its AMPP partner logic 
+# functions, and any output files from any of the foregoing 
+# (including device programming or simulation files), and any 
+# associated documentation or information are expressly subject 
+# to the terms and conditions of the Intel Program License 
+# Subscription Agreement, the Intel Quartus Prime License Agreement,
+# the Intel FPGA IP License Agreement, or other applicable license
+# agreement, including, without limitation, that your use is for
+# the sole purpose of programming logic devices manufactured by
+# Intel and sold by Intel or its authorized distributors.  Please
+# refer to the applicable agreement for further details.
+
+# Quartus Prime Version 18.1.0 Build 625 09/12/2018 SJ Standard Edition
+# File: D:\C4_PRJ\test_pins\ddr2_cyclone_iv.csv
+# Generated on: Wed Aug 12 00:04:25 2026
+
+# Note: The column header names should not be changed if you wish to import this .csv file into the Quartus Prime software.
+
+To,Direction,Location,I/O Bank,VREF Group,Fitter Location,I/O Standard,Reserved,Current Strength,Slew Rate,Output Termination,Differential Pair,Strict Preservation,Weak Pull-Up Resistor
+altera_reserved_tck,Input,,,,PIN_H3,,,,,,,,
+altera_reserved_tdi,Input,,,,PIN_H4,,,,,,,,
+altera_reserved_tdo,Output,,,,PIN_J4,,,,,,,,
+altera_reserved_tms,Input,,,,PIN_J5,,,,,,,,
+leds[2],Output,PIN_C2,1,B1_N0,PIN_C2,3.3-V LVCMOS,,,,,,,
+leds[1],Output,PIN_G5,1,B1_N0,PIN_G5,3.3-V LVCMOS,,,,,,,
+leds[0],Output,PIN_P2,2,B2_N0,PIN_P2,3.3-V LVCMOS,,,,,,,
+mem_addr[14],Output,PIN_C9,7,B7_N0,PIN_C9,SSTL-18 Class I,,maximum current,,,,,
+mem_addr[13],Output,PIN_A14,7,B7_N0,PIN_A14,SSTL-18 Class I,,maximum current,,,,,
+mem_addr[12],Output,PIN_C8,8,B8_N0,PIN_C8,SSTL-18 Class I,,maximum current,,,,,
+mem_addr[11],Output,PIN_B13,7,B7_N0,PIN_B13,SSTL-18 Class I,,maximum current,,,,,
+mem_addr[10],Output,PIN_A10,7,B7_N0,PIN_A10,SSTL-18 Class I,,maximum current,,,,,
+mem_addr[9],Output,PIN_B10,7,B7_N0,PIN_B10,SSTL-18 Class I,,maximum current,,,,,
+mem_addr[8],Output,PIN_B14,7,B7_N0,PIN_B14,SSTL-18 Class I,,maximum current,,,,,
+mem_addr[7],Output,PIN_D11,7,B7_N0,PIN_D11,SSTL-18 Class I,,maximum current,,,,,
+mem_addr[6],Output,PIN_A13,7,B7_N0,PIN_A13,SSTL-18 Class I,,maximum current,,,,,
+mem_addr[5],Output,PIN_A11,7,B7_N0,PIN_A11,SSTL-18 Class I,,maximum current,,,,,
+mem_addr[4],Output,PIN_A15,7,B7_N0,PIN_A15,SSTL-18 Class I,,maximum current,,,,,
+mem_addr[3],Output,PIN_D12,7,B7_N0,PIN_D12,SSTL-18 Class I,,maximum current,,,,,
+mem_addr[2],Output,PIN_D14,7,B7_N0,PIN_D14,SSTL-18 Class I,,maximum current,,,,,
+mem_addr[1],Output,PIN_C14,7,B7_N0,PIN_C14,SSTL-18 Class I,,maximum current,,,,,
+mem_addr[0],Output,PIN_D3,8,B8_N0,PIN_D3,SSTL-18 Class I,,maximum current,,,,,
+mem_ba[2],Output,PIN_E9,7,B7_N0,PIN_E9,SSTL-18 Class I,,maximum current,,,,,
+mem_ba[1],Output,PIN_A3,8,B8_N0,PIN_A3,SSTL-18 Class I,,maximum current,,,,,
+mem_ba[0],Output,PIN_D9,7,B7_N0,PIN_D9,SSTL-18 Class I,,maximum current,,,,,
+mem_cas_n,Output,PIN_B3,8,B8_N0,PIN_B3,SSTL-18 Class I,,maximum current,,,,,
+mem_cke[0],Output,PIN_B4,8,B8_N0,PIN_B4,SSTL-18 Class I,,maximum current,,,,,
+mem_clk[0],Bidir,PIN_B12,7,B7_N0,PIN_B12,SSTL-18 Class I,,,,series 50 ohm with calibration,,,
+mem_clk_n[0],Bidir,PIN_A12,7,B7_N0,PIN_A12,SSTL-18 Class I,,,,series 50 ohm with calibration,,,
+mem_cs_n[0],Output,PIN_C3,8,B8_N0,PIN_C3,SSTL-18 Class I,,maximum current,,,,,
+mem_dm[0],Output,PIN_A4,8,B8_N0,PIN_A4,SSTL-18 Class I,,,,series 50 ohm with calibration,,,
+mem_dq[7],Bidir,PIN_E6,8,B8_N0,PIN_E6,SSTL-18 Class I,,,,series 50 ohm with calibration,,,
+mem_dq[6],Bidir,PIN_A5,8,B8_N0,PIN_A5,SSTL-18 Class I,,,,series 50 ohm with calibration,,,
+mem_dq[5],Bidir,PIN_E8,8,B8_N0,PIN_E8,SSTL-18 Class I,,,,series 50 ohm with calibration,,,
+mem_dq[4],Bidir,PIN_B7,8,B8_N0,PIN_B7,SSTL-18 Class I,,,,series 50 ohm with calibration,,,
+mem_dq[3],Bidir,PIN_B5,8,B8_N0,PIN_B5,SSTL-18 Class I,,,,series 50 ohm with calibration,,,
+mem_dq[2],Bidir,PIN_A7,8,B8_N0,PIN_A7,SSTL-18 Class I,,,,series 50 ohm with calibration,,,
+mem_dq[1],Bidir,PIN_B6,8,B8_N0,PIN_B6,SSTL-18 Class I,,,,series 50 ohm with calibration,,,
+mem_dq[0],Bidir,PIN_E7,8,B8_N0,PIN_E7,SSTL-18 Class I,,,,series 50 ohm with calibration,,,
+mem_dqs[0],Bidir,PIN_A6,8,B8_N0,PIN_A6,SSTL-18 Class I,,,,series 50 ohm with calibration,,,
+mem_odt[0],Output,PIN_D5,8,B8_N0,PIN_D5,SSTL-18 Class I,,maximum current,,,,,
+mem_ras_n,Output,PIN_A2,8,B8_N0,PIN_A2,SSTL-18 Class I,,maximum current,,,,,
+mem_we_n,Output,PIN_B11,7,B7_N0,PIN_B11,SSTL-18 Class I,,maximum current,,,,,
+sys_clk,Input,PIN_E1,1,B1_N0,PIN_E1,3.3-V LVCMOS,,,,,,,
+sys_rst,Input,PIN_B16,6,B6_N0,PIN_B16,1.8 V,,,,,,,
