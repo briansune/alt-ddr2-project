@@ -31,6 +31,7 @@ module top(
 
 	//-----------ddr2 read and write operation---------
 	reg   [26 :0]     local_address;
+	reg   [26 :0]     read_cnt;
 	reg               local_burstbegin;
 	reg               local_read_req;
 	reg               local_write_req;
@@ -58,6 +59,17 @@ module top(
 
 	assign leds[2:1] = {2{local_init_done}} & test_pat[1:0];
 	assign leds[0] = local_init_done ^ error;
+
+	localparam [26:0] last_cnt = 27'h7FF_FFFF;
+	localparam [26:0] last_addr = last_cnt - 2'd2;
+
+	initial begin
+		@(posedge local_init_done)
+		$stop;
+		
+		@(posedge error)
+		$stop;
+	end
 
 	ddr2 ddr2_u0(
 
@@ -94,7 +106,6 @@ module top(
 		.mem_odt(mem_odt),
 		.mem_ras_n(mem_ras_n),
 		.mem_we_n(mem_we_n),
-		.mem_reset_n(),
 		.mem_clk(mem_clk),
 		.mem_clk_n(mem_clk_n),
 		.mem_dq(mem_dq),
@@ -112,6 +123,7 @@ module top(
 		local_burstbegin <= 1'b0;
 		
 		local_address    <= 27'd0;
+		read_cnt <= 27'd0;
 
 		local_wdata <= 16'h0;
 		match_cnt <= 16'h0;
@@ -125,6 +137,7 @@ module top(
 				match_cnt <= match_cnt + 1'b1;
 			if(match_cnt != local_rdata)
 				error <= 1'b1;
+			read_cnt <= read_cnt + 1'b1;
 		end
 
 		local_read_req   <= 1'b0;
@@ -136,22 +149,35 @@ module top(
         begin
             if(local_init_done & local_ready)begin
                 local_state <= BURST_WRITE;
-				local_write_req  <= 1'b1;
 			end
 
-            local_address    <= 27'd0;
+			case(test_pat)
+				3'd0: begin match_cnt <= 16'h0000; local_wdata <= 16'h0000; end
+				3'd1: begin match_cnt <= 16'hFFFF; local_wdata <= 16'hFFFF; end
+				3'd2: begin match_cnt <= 16'h5A5A; local_wdata <= 16'h5A5A; end
+				3'd3: begin match_cnt <= 16'hA5A5; local_wdata <= 16'hA5A5; end
+				3'd4: begin match_cnt <= 16'h5555; local_wdata <= 16'h5555; end
+				3'd5: begin match_cnt <= 16'hAAAA; local_wdata <= 16'hAAAA; end
+				3'd6: begin match_cnt <= 16'h0000; local_wdata <= 16'h0000; end
+				3'd7: begin match_cnt <= 16'h0000; local_wdata <= 16'h0000; end
+			endcase
+
+            local_address <= 27'd0;
+			read_cnt <= 27'd0;
         end
 
         BURST_WRITE:
         begin
 			if(local_init_done & local_ready)begin
 				local_write_req <= 1'b1;
+				local_burstbegin <= 1'b1;
 			end
             
 			if(local_init_done & local_ready & local_write_req)begin
 				if(test_pat >= 3'd6)
 					local_wdata <= local_wdata + 1'b1;
 				local_state <= BURST_WRITE_B;
+				local_burstbegin <= 1'b0;
 			end
         end
 		
@@ -159,7 +185,7 @@ module top(
 			local_write_req  <= 1'b1;
 
 			if(local_init_done & local_ready & local_write_req)begin
-				if(local_address >= 27'h7FF_FFFE)begin
+				if(local_address >= last_addr)begin
 					local_state <= BURST_READ;
 					local_address <= 27'd0;
 				end else begin
@@ -169,42 +195,34 @@ module top(
 					local_state <= BURST_WRITE;
 				end
 				
+				local_burstbegin <= 1'b0;
 				local_write_req  <= 1'b0;
 			end
 		end
-		
-        BURST_READ:
-        begin
-		
-			local_burstbegin <= 1'b1;
-			local_read_req <= 1'b1;
-		
-            if(local_init_done & local_ready & local_read_req)begin
-				if(local_address >= 27'h7FF_FFFE)begin
+
+		BURST_READ: begin
+			if(local_init_done & local_ready)begin
+				local_read_req <= 1'b1;
+				local_burstbegin <= 1'b1;
+			end
+			
+			if(local_init_done & local_ready & local_read_req)begin
+				if(local_address >= last_addr)begin
 					local_state <= DONE;
 					local_address <= 27'd0;
-					local_burstbegin <= 1'b0;
-					local_read_req <= 1'b0;
 				end else begin
 					local_address <= local_address + 2'd2;
 				end
-			end      
-        end
-		
+				
+				local_burstbegin <= 1'b0;
+				local_read_req <= 1'b0;
+			end
+		end
+
 		DONE: begin
-			if(!local_rdata_valid)begin
+			if(read_cnt >= last_cnt)begin
 				local_state <= IDLE;
 				test_pat <= test_pat + 1'b1;
-				case(test_pat)
-					3'd0: begin match_cnt <= 16'h0000; local_wdata <= 16'h0000; end
-					3'd1: begin match_cnt <= 16'hFFFF; local_wdata <= 16'hFFFF; end
-					3'd2: begin match_cnt <= 16'h5A5A; local_wdata <= 16'h5A5A; end
-					3'd3: begin match_cnt <= 16'hA5A5; local_wdata <= 16'hA5A5; end
-					3'd4: begin match_cnt <= 16'h5555; local_wdata <= 16'h5555; end
-					3'd5: begin match_cnt <= 16'hAAAA; local_wdata <= 16'hAAAA; end
-					3'd6: begin match_cnt <= 16'h0000; local_wdata <= 16'h0000; end
-					3'd7: begin match_cnt <= 16'h0000; local_wdata <= 16'h0000; end
-				endcase
 			end
 		end
 		
